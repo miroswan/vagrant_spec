@@ -66,19 +66,21 @@ to the shell. Otherwise, it will return zero.
 
 [test_ansible]
 
+Thing that fails
+  dumb_service totally fails (FAILED - 1)
+
 ssh
   ssh should be running
-  thing fails (FAILED - 1)
 
 Failures:
 
-  1) ssh thing fails
+  1) Thing that fails dumb_service totally fails
      On host `127.0.0.1'
      Failure/Error: expect(service('dumb_service')).to be_running
        expected Service "dumb_service" to be running
        sudo -p 'Password: ' /bin/sh -c ps\ aux\ \|\ grep\ -w\ --\ dumb_service\ \|\ grep\ -qv\ grep
 
-     # ./serverspec/ssh_spec.rb:11:in `block (2 levels) in <top (required)>'
+     # ./serverspec/fail_spec.rb:6:in `block (2 levels) in <top (required)>'
      # ./lib/vagrant_spec/test_plan.rb:62:in `execute_plan_tests'
      # ./lib/vagrant_spec/test_plan.rb:31:in `block (2 levels) in run'
      # ./lib/vagrant_spec/test_plan.rb:31:in `each'
@@ -89,28 +91,30 @@ Failures:
      # ./lib/vagrant_spec/command/base.rb:61:in `parse_subcommand'
      # ./lib/vagrant_spec/command/base.rb:25:in `execute'
 
-Finished in 0.488 seconds (files took 1.6 seconds to load)
+Finished in 0.61902 seconds (files took 1.61 seconds to load)
 2 examples, 1 failure
 
 Failed examples:
 
-rspec ./serverspec/ssh_spec.rb:10 # ssh thing fails
+rspec ./serverspec/fail_spec.rb:5 # Thing that fails dumb_service totally fails
 
 [test_pansible]
 
+Thing that fails
+  dumb_service totally fails (FAILED - 2)
+
 ssh
   ssh should be running
-  thing fails (FAILED - 2)
 
 Failures:
 
-  1) ssh thing fails
+  1) Thing that fails dumb_service totally fails
      On host `127.0.0.1'
      Failure/Error: expect(service('dumb_service')).to be_running
        expected Service "dumb_service" to be running
        sudo -p 'Password: ' /bin/sh -c ps\ aux\ \|\ grep\ -w\ --\ dumb_service\ \|\ grep\ -qv\ grep
 
-     # ./serverspec/ssh_spec.rb:11:in `block (2 levels) in <top (required)>'
+     # ./serverspec/fail_spec.rb:6:in `block (2 levels) in <top (required)>'
      # ./lib/vagrant_spec/test_plan.rb:62:in `execute_plan_tests'
      # ./lib/vagrant_spec/test_plan.rb:31:in `block (2 levels) in run'
      # ./lib/vagrant_spec/test_plan.rb:31:in `each'
@@ -121,12 +125,12 @@ Failures:
      # ./lib/vagrant_spec/command/base.rb:61:in `parse_subcommand'
      # ./lib/vagrant_spec/command/base.rb:25:in `execute'
 
-Finished in 0.06189 seconds (files took 0.58192 seconds to load)
+Finished in 0.06334 seconds (files took 0.58345 seconds to load)
 2 examples, 1 failure
 
 Failed examples:
 
-rspec ./serverspec/ssh_spec.rb:10 # ssh thing fails
+rspec ./serverspec/fail_spec.rb:5 # Thing that fails dumb_service totally fails
 
 > echo $?
 1
@@ -136,9 +140,10 @@ rspec ./serverspec/ssh_spec.rb:10 # ssh thing fails
 
 * Fork the development branch
 * ```bundle install```
-* bundle exec vagrant up
-* bundle exec vagrant init
-* bundle exec vagrant test
+* ```bundle exec vagrant up```
+* ```bundle exec vagrant init```
+* ```bundle exec vagrant test```
+
 
 ## Notes:
 
