@@ -1,7 +1,7 @@
 # vagrant_spec
 
 Vagrant Spec is a Vagrant plugin that makes integration testing for deployments
-to clustered systems a breeze. It also seperates the build and deployment steps
+to clustered systems a breeze. It also separates the build and deployment steps
 to clearly delineate pipeline tasks. 
 
 ## Why not use TestKitchen or vagrant-serverspec?
@@ -17,7 +17,7 @@ nodes are brought up. This allows you to run the same ansible_playbook commands
 against the local node set as you would elsewhere. 
 
 * vagrant_spec allows you to use multiple configuration management solutions. If
-you seperate configuration management from deployment tooling, this will come
+you separate configuration management from deployment tooling, this will come
 in handy. 
 
 Here is a sample Vagrantfile:
@@ -37,11 +37,15 @@ Vagrant.configure(2) do |config|
   config.spec.ansible_inventory = { 'all' => /test/ }
 
   # nodes: Regexp matching the desired nodes or array of nodes
-  # flags: Command line flags you would pass to rspec
+  # flags: Command line flags you would pass to rspec 
   config.spec.test_plan = [
     {
-      'nodes' => /test/,
-      'flags' => '--format documentation --color serverspec'
+      'nodes' => /test_ansi/,
+      'flags' => '--format documentation --color --pattern serverspec/ssh*'
+    },
+    {
+      'nodes' => /test_pansi/,
+      'flags' => '--format documentation --color --pattern serverspec/fail*'
     }
   ]
 end
@@ -76,6 +80,8 @@ to the shell. Otherwise, it will return zero.
 ## Sample Output
 
 ```
+> bundle exec vagrant spec init
+
 > bundle exec vagrant spec test
 
 *******************************************************
@@ -84,45 +90,16 @@ to the shell. Otherwise, it will return zero.
 
 [test_ansible]
 
-Thing that fails
-  dumb_service totally fails (FAILED - 1)
-
 ssh
   ssh should be running
 
-Failures:
-
-  1) Thing that fails dumb_service totally fails
-     On host `127.0.0.1'
-     Failure/Error: expect(service('dumb_service')).to be_running
-       expected Service "dumb_service" to be running
-       sudo -p 'Password: ' /bin/sh -c ps\ aux\ \|\ grep\ -w\ --\ dumb_service\ \|\ grep\ -qv\ grep
-
-     # ./serverspec/fail_spec.rb:6:in `block (2 levels) in <top (required)>'
-     # ./lib/vagrant_spec/test_plan.rb:62:in `execute_plan_tests'
-     # ./lib/vagrant_spec/test_plan.rb:31:in `block (2 levels) in run'
-     # ./lib/vagrant_spec/test_plan.rb:31:in `each'
-     # ./lib/vagrant_spec/test_plan.rb:31:in `block in run'
-     # ./lib/vagrant_spec/test_plan.rb:26:in `each'
-     # ./lib/vagrant_spec/test_plan.rb:26:in `run'
-     # ./lib/vagrant_spec/command/test.rb:18:in `execute'
-     # ./lib/vagrant_spec/command/base.rb:61:in `parse_subcommand'
-     # ./lib/vagrant_spec/command/base.rb:25:in `execute'
-
-Finished in 0.61902 seconds (files took 1.61 seconds to load)
-2 examples, 1 failure
-
-Failed examples:
-
-rspec ./serverspec/fail_spec.rb:5 # Thing that fails dumb_service totally fails
+Finished in 0.46065 seconds (files took 1.68 seconds to load)
+1 example, 0 failures
 
 [test_pansible]
 
 Thing that fails
-  dumb_service totally fails (FAILED - 2)
-
-ssh
-  ssh should be running
+  dumb_service totally fails (FAILED - 1)
 
 Failures:
 
@@ -132,23 +109,23 @@ Failures:
        expected Service "dumb_service" to be running
        sudo -p 'Password: ' /bin/sh -c ps\ aux\ \|\ grep\ -w\ --\ dumb_service\ \|\ grep\ -qv\ grep
 
-     # ./serverspec/fail_spec.rb:6:in `block (2 levels) in <top (required)>'
+     # ./serverspec/fail_spec.rb:5:in `block (2 levels) in <top (required)>'
      # ./lib/vagrant_spec/test_plan.rb:62:in `execute_plan_tests'
      # ./lib/vagrant_spec/test_plan.rb:31:in `block (2 levels) in run'
      # ./lib/vagrant_spec/test_plan.rb:31:in `each'
      # ./lib/vagrant_spec/test_plan.rb:31:in `block in run'
-     # ./lib/vagrant_spec/test_plan.rb:26:in `each'
-     # ./lib/vagrant_spec/test_plan.rb:26:in `run'
+     # ./lib/vagrant_spec/test_plan.rb:30:in `each'
+     # ./lib/vagrant_spec/test_plan.rb:30:in `run'
      # ./lib/vagrant_spec/command/test.rb:18:in `execute'
      # ./lib/vagrant_spec/command/base.rb:61:in `parse_subcommand'
      # ./lib/vagrant_spec/command/base.rb:25:in `execute'
 
-Finished in 0.06334 seconds (files took 0.58345 seconds to load)
-2 examples, 1 failure
+Finished in 0.05726 seconds (files took 0.58135 seconds to load)
+1 example, 1 failure
 
 Failed examples:
 
-rspec ./serverspec/fail_spec.rb:5 # Thing that fails dumb_service totally fails
+rspec ./serverspec/fail_spec.rb:4 # Thing that fails dumb_service totally fails
 
 > echo $?
 1

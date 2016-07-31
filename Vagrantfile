@@ -16,8 +16,12 @@ Vagrant.configure(2) do |config|
   # flags: Command line flags you would pass to rspec 
   config.spec.test_plan = [
     {
-      'nodes' => /test/,
-      'flags' => '--format documentation --color serverspec'
+      'nodes' => /test_ansi/,
+      'flags' => '--format documentation --color --pattern serverspec/ssh*'
+    },
+    {
+      'nodes' => /test_pansi/,
+      'flags' => '--format documentation --color --pattern serverspec/fail*'
     }
   ]
 end

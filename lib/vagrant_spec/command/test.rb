@@ -14,13 +14,13 @@ module VagrantSpec
       end
 
       def execute
-        parse_opts
+        return unless parse_opts
         VagrantSpec::TestPlan.new(@env).run
       end
 
       def parse_opts
         opts = OptionParser.new do |o|
-          o.banner = 'Run the tests configured in Vagrantfile'
+          o.banner = 'Run the tests configured in the Vagrantfile'
           o.separator ''
           o.separator 'Usage: vagrant spec test'
           o.separator ''

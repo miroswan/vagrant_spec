@@ -24,10 +24,8 @@ module VagrantSpec
     #
     # return [Array<Vagrant::Machine>]
     def match_nodes(reg)
-      @env.active_machines.collect do |m|
-        node = machine(m[0])
-        node if reg.match(node.name.to_s)
-      end
+      @env.active_machines.collect { |m| machine(m[0]) }
+                          .select  { |m| m if reg.match(m.name.to_s)}
     end
   end
 end

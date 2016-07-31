@@ -23,11 +23,11 @@ module VagrantSpec
     # This will fail if any of the tests fail, but it will allow all tests to
     # run
     def run
+      @env.ui.info('*******************************************************')
+      @env.ui.info('***************** ServerSpec Test Run *****************')
+      @env.ui.info('*******************************************************')
+      @env.ui.info('')
       @test_plan.each do |plan|
-        @env.ui.info('*******************************************************')
-        @env.ui.info('***************** ServerSpec Test Run *****************')
-        @env.ui.info('*******************************************************')
-        @env.ui.info('')
         nodes(plan).each { |node| execute_plan_tests(node, plan) }
       end
       exit @ret_code
