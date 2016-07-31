@@ -53,6 +53,9 @@ end
 
 ## Configuration
 
+* config.spec.directory: relative path to your serverspec test files. This 
+defaults to serverspec. 
+
 * config.spec.ansible_inventory: a hash that maps ansible groups to your nodes.
 You can specify as many groups as you need. You can match nodes by regular 
 expression or explicitly provide an array of node names. This will generate 
