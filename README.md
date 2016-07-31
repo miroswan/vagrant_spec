@@ -4,6 +4,22 @@ Vagrant Spec is a Vagrant plugin that makes integration testing for deployments
 to clustered systems a breeze. It also seperates the build and deployment steps
 to clearly delineate pipeline tasks. 
 
+## Why not use TestKitchen or vagrant-serverspec?
+
+* Test Kitchen is an excellent integration testing system developed by Chef.
+However, it is designed to provision, test, and destroy each system one at a
+time. This is undesireable for testing clustered or distributed systems. 
+vagrant-serverspec has similar pitfalls. 
+
+* vagrant_spec allows you to leverage your deployment tools just like you would
+in staging and production. It generates an ansible inventory file after all
+nodes are brought up. This allows you to run the same ansible_playbook commands
+against the local node set as you would elsewhere. 
+
+* vagrant_spec allows you to use multiple configuration management solutions. If
+you seperate configuration management from deployment tooling, this will come
+in handy. 
+
 Here is a sample Vagrantfile:
 
 ```
