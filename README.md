@@ -8,17 +8,20 @@ to clearly delineate pipeline tasks.
 
 * Test Kitchen is an excellent integration testing system developed by Chef.
 However, it is designed to provision, test, and destroy each system one at a
-time. This is undesireable for testing clustered or distributed systems. 
-vagrant-serverspec has similar pitfalls. 
+time. The directory structure it expects makes sharing tests across nodes 
+difficult to manager. This is undesireable for testing clustered or 
+distributed systems. vagrant-serverspec has similar pitfalls. 
 
 * vagrant_spec allows you to leverage your deployment tools just like you would
 in staging and production. It generates an ansible inventory file after all
 nodes are brought up. This allows you to run the same ansible_playbook commands
 against the local node set as you would elsewhere. 
 
-* vagrant_spec allows you to use multiple configuration management solutions. If
-you separate configuration management from deployment tooling, this will come
-in handy. 
+* routing tests to nodes is flexible and simple. 
+
+* vagrant_spec allows you to provision your nodes with configuration management
+and leverage ansible for orchestration and deployment. TestKitchen currently
+does not support this scenario without much trouble. 
 
 Here is a sample Vagrantfile:
 
