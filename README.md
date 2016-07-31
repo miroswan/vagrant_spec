@@ -35,7 +35,9 @@ end
 
 * config.spec.ansible_inventory: a hash that maps ansible groups to your nodes.
 You can specify as many groups as you need. You can match nodes by regular 
-expression or explicitly provide an array of node names. 
+expression or explicitly provide an array of node names. This will generate 
+an vagrantspec_inventory based on your active nodes. You use this file for 
+running ansible playbooks against your Vagrant instances. 
 
 * config.spec.test_plan: an array of hashes. nodes can either be a regular 
 expression object that matches your desired nodes or an explicit array of 
