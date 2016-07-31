@@ -1,0 +1,12 @@
+
+<% @inventory.each do |group, nodes| %>
+[<%= group %>]
+<% nodes.each do |node| %>
+<% node.each do |node_name, data| %>
+<%= node_name %> <%= data.collect { |k, v| "#{k}=#{v}" }.join(' ') %>
+
+<% end %>
+<% end %>
+
+
+<% end %>

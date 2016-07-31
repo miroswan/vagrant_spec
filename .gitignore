@@ -1,0 +1,4 @@
+.vagrant
+serverspec
+Gemfile.lock
+vagrantspec_inventory
