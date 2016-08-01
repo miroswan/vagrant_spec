@@ -3,12 +3,12 @@
 begin
   require 'vagrant'
 rescue LoadError
-  raise 'The Vagrant plugin spec must be run within Vagrant'
+  raise 'The Vagrant plugin vagrant_spec must be run within Vagrant'
 end
 
 module VagrantSpec
   # Plugin definitions
-  class Plugin < Vagrant.plugin('2')
+  class Plugin < Vagrant.plugin(2)
     name 'spec'
     description <<-DESC
     This plugin eases rspec and serverspec testing

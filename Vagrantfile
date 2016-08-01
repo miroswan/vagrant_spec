@@ -13,7 +13,7 @@ Vagrant.configure(2) do |config|
   config.spec.ansible_inventory = { 'all' => /test/ }
 
   # nodes: Regexp matching the desired nodes or array of nodes
-  # flags: Command line flags you would pass to rspec 
+  # flags: Command line flags you would pass to rspec
   config.spec.test_plan = [
     {
       'nodes' => /test_ansi/,
