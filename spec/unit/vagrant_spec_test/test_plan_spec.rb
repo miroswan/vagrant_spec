@@ -5,7 +5,6 @@ require 'spec_helper'
 require 'vagrant_spec/test_plan'
 require 'vagrant_spec/command/test'
 
-
 describe VagrantSpec::TestPlan do
   include_context 'unit'
 
@@ -32,7 +31,7 @@ describe VagrantSpec::TestPlan do
     env.create_vagrant_env
     env
   end
-  
+
   let(:mock_plan) do
     [
       {
@@ -52,13 +51,13 @@ describe VagrantSpec::TestPlan do
     {
       host:             'test_host',
       port:             '2222',
-      private_key_path: [ 'path_to_key' ],
+      private_key_path: ['path_to_key'],
       username:         'vagrant'
     }
   end
 
- ###############################################################################
- # Stubs
+  ##############################################################################
+  # Stubs
 
   before do
     allow_any_instance_of(VagrantSpec::MachineFinder)
@@ -72,7 +71,7 @@ describe VagrantSpec::TestPlan do
 
     allow(iso_env).to     receive(:vagrantfile) { mock_vf_obj   }
     allow(iso_env).to     receive(:ui)          { mock_ui       }
-    allow(mock_ui).to     receive(:info)         
+    allow(mock_ui).to     receive(:info)
     allow(mock_vf_obj).to receive(:config)      { mock_config   }
     allow(mock_config).to receive(:spec)        { mock_spec     }
     allow(mock_spec).to   receive(:test_plan)   { mock_plan     }

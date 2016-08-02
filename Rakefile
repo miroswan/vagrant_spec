@@ -6,5 +6,5 @@ task default: %i(unit)
 
 desc 'Run unit tests'
 RSpec::Core::RakeTask.new(:unit) do |t|
-  t.pattern = 'spec/unit/**/*test.rb'
+  t.pattern = 'spec/unit/**/*spec.rb'
 end
