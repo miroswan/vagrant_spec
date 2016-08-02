@@ -10,6 +10,7 @@ module VagrantSpec
   #
   # env [Vagrant::Environment]
   class TestPlan
+    attr_reader :env, :config, :test_plan, :m_finder
     def initialize(env)
       @env       = env
       @config    = VagrantSpec::Config.load(env)

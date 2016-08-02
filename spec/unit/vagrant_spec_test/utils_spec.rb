@@ -5,10 +5,7 @@ require 'vagrant_spec/utils'
 
 describe VagrantSpec::Utils do
   let(:klass) do 
-    class Klass
-      include VagrantSpec::Utils
-    end
-    Klass.new
+    Class.new { include VagrantSpec::Utils }.new
   end
 
   it '#project_root dirname is vagrant_spec' do
