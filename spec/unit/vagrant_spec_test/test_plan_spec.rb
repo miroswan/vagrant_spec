@@ -14,26 +14,7 @@ describe VagrantSpec::TestPlan do
   ##############################################################################
   # mocks
 
-  let(:vagrant_file) do
-    <<-EOF.gsub(/^ {4}/, '')
-    Vagrant.configure(2) do |config|
-      config.vm.box = 'test'
-    end
-    EOF
-  end
-
-  let(:mock_vf_obj) { double(Vagrant::Vagrantfile)      }
-  let(:mock_ui)     { double(Vagrant::UI)               }
-  let(:mock_config) { double(Vagrant::Config)           }
-  let(:mock_spec)   { double(VagrantSpec::Config::Base) }
-  let(:mock_node)   { double(Vagrant::Machine)          }
-
-  let(:iso_env) do
-    env = isolated_environment
-    env.vagrantfile vagrant_file
-    env.create_vagrant_env
-    env
-  end
+  include_examples 'shared_mocks'
 
   let(:mock_plan) do
     [
@@ -47,8 +28,6 @@ describe VagrantSpec::TestPlan do
       }
     ]
   end
-
-  let(:spec_dir) { 'serverspec' }
 
   let(:mock_ssh_info) do
     {

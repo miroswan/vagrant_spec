@@ -3,6 +3,7 @@
 require 'erb'
 
 require 'vagrant_spec/config'
+require 'vagrant_spec/utils'
 
 module VagrantSpec
   # Generates a spec_helper.rb for integration testing

@@ -41,3 +41,40 @@ end
     plugin_obj.components.send(plural_symbol)[:top].keys
   end
 end
+
+RSpec.shared_examples 'shared_mocks' do
+  let(:vagrant_file) do
+    <<-EOF.gsub(/^ {4}/, '')
+    Vagrant.configure(2) do |config|
+      config.vm.box = 'test'
+    end
+    EOF
+  end
+
+  let(:mock_vf_obj) { double(Vagrant::Vagrantfile)      }
+  let(:mock_ui)     { double(Vagrant::UI)               }
+  let(:mock_config) { double(Vagrant::Config)           }
+  let(:mock_spec)   { double(VagrantSpec::Config::Base) }
+  let(:mock_node)   { double(Vagrant::Machine)          }
+
+  let(:spec_dir)    { 'serverspec'                      }
+
+  let(:iso_env) do
+    env = isolated_environment
+    env.vagrantfile vagrant_file
+    env.create_vagrant_env
+    env
+  end
+
+  before do
+    allow(iso_env).to     receive(:ui)
+    allow(mock_node).to   receive(:name)
+    allow(mock_ui).to     receive(:info)
+    
+    allow(iso_env).to     receive(:vagrantfile) { mock_vf_obj   }
+    allow(iso_env).to     receive(:ui)          { mock_ui       }
+    allow(mock_vf_obj).to receive(:config)      { mock_config   }
+    allow(mock_config).to receive(:spec)        { mock_spec     }
+    allow(mock_spec).to   receive(:directory)   { spec_dir      }
+  end
+end
