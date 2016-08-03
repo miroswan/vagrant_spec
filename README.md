@@ -1,5 +1,7 @@
 # vagrant_spec
 
+[![Build Status](https://travis-ci.org/miroswan/vagrant_spec.svg?branch=master)](https://travis-ci.org/miroswan/vagrant_spec)
+
 Vagrant Spec is a Vagrant plugin that makes integration testing for deployments
 to clustered systems a breeze. It also separates the build and deployment steps
 to clearly delineate pipeline tasks. 
