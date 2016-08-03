@@ -4,8 +4,11 @@
 require 'spec_helper'
 require 'vagrant_spec/test_plan'
 require 'vagrant_spec/command/test'
+require 'rspec/support/spec/in_sub_process'
+require 'rspec/support/spec/stderr_splitter'
 
 describe VagrantSpec::TestPlan do
+  include RSpec::Support::InSubProcess
   include_context 'unit'
 
   ##############################################################################
@@ -63,7 +66,7 @@ describe VagrantSpec::TestPlan do
     allow_any_instance_of(VagrantSpec::MachineFinder)
       .to receive(:match_nodes) { [double(Vagrant::Machine)] }
     allow_any_instance_of(VagrantSpec::MachineFinder)
-      .to receive(:machine)     { double(Vagrnat::Machine)   }
+      .to receive(:machine)     { double(Vagrant::Machine)   }
 
     allow(RSpec::Core::Runner).to receive(:run) { 0 }
     allow(iso_env).to             receive(:ui)
@@ -105,14 +108,22 @@ describe VagrantSpec::TestPlan do
 
   ##############################################################################
   # Testing #execute_plan_tests
+  #
+  # These tests must be executed in a sub process because execute_plan_tests 
+  # executes clear_examples. clear_examples modifies global state, so we must
+  # contain it. 
 
   it '#execute_plan_tests runs the RSPec tests' do
-    expect(RSpec::Core::Runner).to receive(:run)
-    subject.execute_plan_tests(mock_node, mock_plan[0])
+    in_sub_process do
+      expect(RSpec::Core::Runner).to receive(:run)
+      subject.execute_plan_tests(mock_node, mock_plan[0])
+    end
   end
 
   it '#execute adds the spec.directory to the load path' do
-    subject.execute_plan_tests(mock_node, mock_plan[0])
-    expect(subject.test_plan[0]['flags']).to include('-I serverspec')
+    in_sub_process do
+      subject.execute_plan_tests(mock_node, mock_plan[0])
+      expect(subject.test_plan[0]['flags']).to include('-I serverspec')
+    end
   end
 end
