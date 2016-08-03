@@ -78,3 +78,21 @@ RSpec.shared_examples 'shared_mocks' do
     allow(mock_spec).to   receive(:directory)   { spec_dir      }
   end
 end
+
+RSpec::Matchers.define :have_attr_accessor do |field|
+  match do |obj_i|
+    obj_i.respond_to?(field) && obj_i.respond_to?("#{field}=")
+  end
+
+  failure_message do |obj_i|
+    "expected attr_accessor for #{field} on #{obj_i}"
+  end
+
+  failure_message_when_negated do |obj_i|
+    "expected attr_accessor for #{field} not to be defined on #{obj_i}"
+  end
+
+  description do
+    'checks to see if there is an attr accessor on the supplied object'
+  end
+end

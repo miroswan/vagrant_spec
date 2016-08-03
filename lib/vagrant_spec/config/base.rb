@@ -22,7 +22,7 @@ module VagrantSpec
         @directory = DEFAULTS['directory'] if @directory == UNSET_VALUE
       end
 
-      def final_ansible_ansible_inventory
+      def final_ansible_inventory
         if @ansible_inventory == UNSET_VALUE
           @ansible_inventory = DEFAULTS['ansible_inventory']
         end
@@ -34,7 +34,7 @@ module VagrantSpec
 
       def finalize!
         final_directory
-        final_ansible_ansible_inventory
+        final_ansible_inventory
         final_test_plan
       end
     end

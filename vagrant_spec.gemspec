@@ -16,8 +16,7 @@ Gem::Specification.new do |s|
     running Serverspec and/or RSpec tests.
   EOF
 
-  s.add_dependency 'rspec'
-  s.add_dependency 'serverspec'
+  s.add_dependency 'serverspec', '~> 2.36.0'
   s.add_dependency 'ruby_dep', '~> 1.3.1'
 
   s.add_development_dependency 'bundler'
