@@ -51,13 +51,9 @@ describe VagrantSpec::TestPlan do
     allow(iso_env).to             receive(:ui)
     allow(mock_node).to           receive(:name)
 
-    allow(iso_env).to     receive(:vagrantfile) { mock_vf_obj   }
     allow(iso_env).to     receive(:ui)          { mock_ui       }
     allow(mock_ui).to     receive(:info)
-    allow(mock_vf_obj).to receive(:config)      { mock_config   }
-    allow(mock_config).to receive(:spec)        { mock_spec     }
     allow(mock_spec).to   receive(:test_plan)   { mock_plan     }
-    allow(mock_spec).to   receive(:directory)   { spec_dir      }
     allow(mock_node).to   receive(:ssh_info)    { mock_ssh_info }
   end
 
