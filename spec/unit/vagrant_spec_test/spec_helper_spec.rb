@@ -5,7 +5,6 @@ require 'vagrant_spec/spec_helper'
 require 'vagrant_spec/utils'
 
 describe VagrantSpec::SpecHelper do
-
   include_context  'unit'
   include_examples 'shared_mocks'
 
@@ -39,6 +38,4 @@ describe VagrantSpec::SpecHelper do
     result = subject.spec_helper_template
     expect(result).to match(%r{vagrant_spec/templates/spec_helper.erb})
   end
-
-
 end

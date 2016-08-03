@@ -88,9 +88,9 @@ describe VagrantSpec::TestPlan do
   ##############################################################################
   # Testing #execute_plan_tests
   #
-  # These tests must be executed in a sub process because execute_plan_tests 
+  # These tests must be executed in a sub process because execute_plan_tests
   # executes clear_examples. clear_examples modifies global state, so we must
-  # contain it. 
+  # contain it.
 
   it '#execute_plan_tests runs the RSPec tests' do
     in_sub_process do
