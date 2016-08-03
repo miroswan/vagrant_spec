@@ -18,6 +18,7 @@ Gem::Specification.new do |s|
 
   s.add_dependency 'rspec'
   s.add_dependency 'serverspec'
+  s.add_dependency 'ruby_dep', '~> 1.3.1'
 
   s.add_development_dependency 'bundler'
   s.add_development_dependency 'rubocop'
