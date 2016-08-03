@@ -140,11 +140,7 @@ rspec ./serverspec/fail_spec.rb:4 # Thing that fails dumb_service totally fails
 ## Development
 
 * Fork the development branch
-* ```bundle install```
-* ```bundle exec vagrant up```
-* ```bundle exec vagrant init```
-* ```bundle exec vagrant test```
-
+* ```bundle exec rake test```
 
 ## Notes:
 

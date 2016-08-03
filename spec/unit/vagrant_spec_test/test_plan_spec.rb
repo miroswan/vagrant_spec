@@ -51,7 +51,7 @@ describe VagrantSpec::TestPlan do
     allow(iso_env).to             receive(:ui)
     allow(mock_node).to           receive(:name)
 
-    allow(iso_env).to     receive(:ui)          { mock_ui       }
+    allow(iso_env).to     receive(:ui) { mock_ui }
     allow(mock_ui).to     receive(:info)
     allow(mock_spec).to   receive(:test_plan)   { mock_plan     }
     allow(mock_node).to   receive(:ssh_info)    { mock_ssh_info }

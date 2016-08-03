@@ -7,8 +7,8 @@ describe VagrantSpec::AnsibleInventory do
   include_context  'unit'
   include_examples 'shared_mocks'
 
-  let(:mock_ansible_inventory_regexp ) { { 'all' => /node/    } }
-  let(:mock_ansible_inventory_array)   { { 'all' => %w(node1) } }
+  let(:mock_ansible_inventory_regexp) { { 'all' => /node/ } }
+  let(:mock_ansible_inventory_array) { { 'all' => %w(node1) } }
 
   let(:mock_machine_ssh_config) do
     {
@@ -22,7 +22,7 @@ describe VagrantSpec::AnsibleInventory do
   subject { VagrantSpec::AnsibleInventory.new(iso_env) }
 
   def load_ansible_inventory_proc
-    Proc.new do
+    proc do
       allow(subject).to  receive(:handle_array)
       allow(subject).to  receive(:handle_regexp)
     end
@@ -44,7 +44,7 @@ describe VagrantSpec::AnsibleInventory do
       allow(mock_spec).to receive(:ansible_inventory) do
         mock_ansible_inventory_array
       end
-           
+
       load_ansible_inventory_proc.call
       expect(subject).to receive(:handle_array)
       subject.load_ansible_inventory
@@ -61,13 +61,13 @@ describe VagrantSpec::AnsibleInventory do
 
     allow(subject).to  receive(:generate_machine_config)
     expect(subject).to receive(:generate_machine_config).with(nodes[0])
-    
+
     subject.handle_array(group, nodes)
   end
 
   # Inject code into handle_regexp tests
   def handle_regexp_proc
-    Proc.new do
+    proc do
       allow(mock_spec).to receive(:ansible_inventory) do
         mock_ansible_inventory_regexp
       end
@@ -92,15 +92,15 @@ describe VagrantSpec::AnsibleInventory do
     it '#handle_regexp does nothing' do
       handle_regexp_proc.call
 
-      allow(subject.m_finder).to receive(:match_nodes) { }
+      allow(subject.m_finder).to receive(:match_nodes) {}
       expect(subject).to_not     receive(:generate_machine_config)
-      
+
       subject.handle_regexp('all', /node/)
     end
   end
 
-  def generate_machine_config_proc(name)
-    Proc.new do
+  def generate_machine_config_proc(_name)
+    proc do
       allow(mock_spec).to receive(:ansible_inventory) do
         mock_ansible_inventory_regexp
       end
@@ -118,7 +118,7 @@ describe VagrantSpec::AnsibleInventory do
         mock_node
       end
 
-      expect(subject).to receive(:machine_ssh_config) do 
+      expect(subject).to receive(:machine_ssh_config) do
         { 'name' => mock_machine_ssh_config }
       end
 
@@ -131,14 +131,13 @@ describe VagrantSpec::AnsibleInventory do
       name = 'node1'
       generate_machine_config_proc(name).call
 
-      allow(subject.m_finder).to receive(:machine).with(name.to_sym) { } 
+      allow(subject.m_finder).to receive(:machine).with(name.to_sym) {}
 
-      expect(subject).not_to receive(:machine_ssh_config) do 
+      expect(subject).not_to receive(:machine_ssh_config) do
         { 'name' => mock_machine_ssh_config }
       end
 
       subject.generate_machine_config(name)
     end
   end
-
 end
