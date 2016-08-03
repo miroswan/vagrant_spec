@@ -11,7 +11,7 @@ module VagrantSpec
   # env [Vagrant::Environment]
   class AnsibleInventory
     include VagrantSpec::Utils
-    attr_accessor :env, :config, :ansible_inventory, :inventory
+    attr_accessor :env, :config, :ansible_inventory, :inventory, :m_finder
     def initialize(env)
       @env               = env
       @config            = env.vagrantfile.config
@@ -50,8 +50,10 @@ module VagrantSpec
     # nodes [Array<String>]
     def handle_regexp(group, nodes)
       machines = @m_finder.match_nodes(nodes)
-      @inventory[group] = machines.collect do |name|
-        generate_machine_config(name.name)
+      if machines
+        @inventory[group] = machines.collect do |name|
+          generate_machine_config(name.name)
+        end
       end
     end
 
