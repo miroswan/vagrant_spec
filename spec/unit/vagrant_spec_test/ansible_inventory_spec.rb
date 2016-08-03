@@ -29,7 +29,7 @@ describe VagrantSpec::AnsibleInventory do
   end
 
   context 'when ansible_inventory is a Regexp' do
-    it '#load_ansible_inventory calls handle_array' do
+    it '#load_ansible_inventory calls handle_regexp' do
       allow(mock_spec).to receive(:ansible_inventory) do
         mock_ansible_inventory_regexp
       end
@@ -40,7 +40,7 @@ describe VagrantSpec::AnsibleInventory do
   end
 
   context 'when ansibe_inventory is an Array' do
-    it '#load_ansible_inventory calls handle_regexp' do
+    it '#load_ansible_inventory calls handle_array' do
       allow(mock_spec).to receive(:ansible_inventory) do
         mock_ansible_inventory_array
       end
