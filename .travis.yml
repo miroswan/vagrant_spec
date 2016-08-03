@@ -1,0 +1,11 @@
+---
+language: ruby
+sudo: true
+
+addons:
+  apt:
+    packages:
+      - virtualbox
+      - vagrant
+
+script: bundle exec rake unit
