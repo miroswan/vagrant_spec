@@ -1,5 +1,8 @@
 # encoding: UTF-8
 
+require 'coveralls'
+Coveralls.wear!
+
 require 'rspec'
 
 # Get path to vagrant's test directory so we can load that code. We'll want it
