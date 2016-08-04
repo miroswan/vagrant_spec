@@ -8,6 +8,7 @@ module VagrantSpec
         'test deployments to clustered systems'
       end
 
+      attr_accessor :valid_commands, :subcommands, :env, :opts
       def initialize(argv, env)
         super
         @main_args,
@@ -18,11 +19,13 @@ module VagrantSpec
                              .select  { |f| f != 'base' }
         @subcommands    = Vagrant::Registry.new
         @env            = env
+        @opts           = nil
       end
 
       def execute
         register_subcommands
-        return if !parse_main_args || !parse_subcommand
+        return unless parse_main_args
+        return unless parse_subcommand
       end
 
       def register_subcommands
@@ -45,7 +48,12 @@ module VagrantSpec
           o.separator 'For help on any individual command run `vagrant spec ' \
                       '<command> -h`'
         end
-        parse_options(opts)
+        @opts = opts && parse_options(opts)
+      end
+
+      def print_help
+        help
+        @env.ui.info @opts.help
       end
 
       def parse_main_args
@@ -57,7 +65,7 @@ module VagrantSpec
 
       def parse_subcommand
         klass = @subcommands.get(@sub_command.to_sym) if @sub_command
-        return help if klass.nil? || @sub_command.nil?
+        return print_help if @sub_command.nil? || klass.nil?
         klass.new(@sub_args, @env).execute
         true
       end
