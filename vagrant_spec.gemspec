@@ -22,7 +22,8 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'bundler'
   s.add_development_dependency 'rubocop'
   s.add_development_dependency 'rake'
-
+  s.add_development_dependency 'coveralls'
+  
   s.files        = `git ls-files`.split("\n")
   s.test_files   = s.files.grep(/^(test|spec|features)/)
   s.require_path = 'lib'

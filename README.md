@@ -1,6 +1,7 @@
 # vagrant_spec
 
-[![Build Status](https://travis-ci.org/miroswan/vagrant_spec.svg?branch=master)](https://travis-ci.org/miroswan/vagrant_spec)
+[![Build Status](https://travis-ci.org/miroswan/vagrant_spec.svg?branch=master)](https://travis-ci.org/miroswan/vagrant_spec) 
+[![Coverage Status](https://coveralls.io/repos/github/miroswan/vagrant_spec/badge.svg?branch=master)](https://coveralls.io/github/miroswan/vagrant_spec?branch=master)
 
 Vagrant Spec is a Vagrant plugin that makes integration testing for deployments
 to clustered systems a breeze. It also separates the build and deployment steps
