@@ -15,6 +15,7 @@ module VagrantSpec
 
       DEFAULTS = VagrantSpec::Config::DEFAULTS
 
+      attr_accessor :config, :directory, :ansible_inventory
       def initialize(argv, env)
         super
         @config            = VagrantSpec::Config.load env
