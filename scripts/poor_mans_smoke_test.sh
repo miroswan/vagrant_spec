@@ -5,6 +5,11 @@
 
 set -e
 
+bundle exec vagrant spec
+bundle exec vagrant spec -h
+bundle exec vagrant spec init -h
+bundle exec vagrant spec test -h
+bundle exec vagrant spec no_command -h
 rm -f serverspec/spec_helper.rb
 bundle exec vagrant up
 bundle exec vagrant spec init

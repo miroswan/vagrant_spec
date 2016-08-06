@@ -144,10 +144,3 @@ rspec ./serverspec/fail_spec.rb:4 # Thing that fails dumb_service totally fails
 
 * Fork the development branch
 * ```bundle exec rake test```
-
-## Notes:
-
-This plugin is not yet deployed to RubyGems. I still have some work to do before
-I can release.
-
-I'd like to entertain support for Fabric and Capistrano. 

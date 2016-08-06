@@ -40,7 +40,7 @@ module VagrantSpec
 
       def help
         opts = OptionParser.new do |o|
-          o.banner = 'Usage: vagrant spec <command> [<args>]'
+          o.banner = "\nUsage: vagrant spec <command> [<args>]"
           o.separator ''
           o.separator 'Available subcommands:'
           @valid_commands.sort.each { |cmd| o.separator "     #{cmd}" }
@@ -53,7 +53,7 @@ module VagrantSpec
 
       def print_help
         help
-        @env.ui.info @opts.help
+        @env.ui.info @opts
       end
 
       def parse_main_args

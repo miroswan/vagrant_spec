@@ -64,8 +64,7 @@ describe VagrantSpec::Command::Base do
     allow(mock_opts).to receive(:help)
 
     expect(i).to        receive(:help)
-    expect(i.env).to    receive(:ui)
-    expect(i.opts).to   receive(:help)
+    expect(mock_ui).to  receive(:info).with(subject.opts)
 
     i.print_help
   end

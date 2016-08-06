@@ -10,10 +10,10 @@ Gem::Specification.new do |s|
   s.email       = %w(demitriswan@gmail.com)
   s.homepage    = 'http://github.com/miroswan/vagrant_spec'
   s.summary     = 'ServerSpec testing with Vagrant for clustered systems'
-  s.description = <<-EOF.gsub(/^{4} /, '')
+  s.description = <<-EOF.gsub(/^ {4}/, '')
     This plugin supports ServerSpec testing against clustered systems by
     allowing Vagrant to build and provision all instances before
-    running Serverspec and/or RSpec tests.
+    running ServerSpec tests.
   EOF
 
   s.add_dependency 'serverspec', '~> 2.36.0'

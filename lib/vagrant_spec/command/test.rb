@@ -20,7 +20,7 @@ module VagrantSpec
 
       def parse_opts
         opts = OptionParser.new do |o|
-          o.banner = 'Run the tests configured in the Vagrantfile'
+          o.banner = "\nRun the tests configured in the Vagrantfile"
           o.separator ''
           o.separator 'Usage: vagrant spec test'
           o.separator ''
