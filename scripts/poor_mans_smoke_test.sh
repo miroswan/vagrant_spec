@@ -5,6 +5,8 @@
 
 set -e
 
+export ANSIBLE_REMOTE_USER=vagrant
+
 bundle exec vagrant spec
 bundle exec vagrant spec -h
 bundle exec vagrant spec init -h
@@ -13,5 +15,6 @@ bundle exec vagrant spec no_command -h
 rm -f serverspec/spec_helper.rb
 bundle exec vagrant up
 bundle exec vagrant spec init
+ansible-playbook site.yml -i vagrantspec_inventory
 bundle exec vagrant spec test || true
 bundle exec vagrant destroy -f 

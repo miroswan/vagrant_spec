@@ -1,0 +1,11 @@
+---
+- hosts: ansi
+  tasks:
+    - name: Simple Test
+      command: echo 'Hello World'
+
+
+- hosts: pansi
+  tasks:
+    - name: Simple Test
+      command: echo "Hello World"
