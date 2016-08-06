@@ -48,7 +48,7 @@ module VagrantSpec
           o.separator 'For help on any individual command run `vagrant spec ' \
                       '<command> -h`'
         end
-        @opts = opts && parse_options(opts)
+        parse_options(opts) && @opts = opts
       end
 
       def print_help

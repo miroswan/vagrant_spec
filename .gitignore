@@ -3,3 +3,4 @@ Gemfile.lock
 vagrantspec_inventory
 serverspec/spec_helper.rb
 coverage
+pkg

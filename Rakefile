@@ -21,3 +21,6 @@ task travis: %i(cop unit)
 
 desc 'Run all tests'
 task test: %i(cop unit smoke_test)
+
+Dir.chdir(File.expand_path('../', __FILE__))
+Bundler::GemHelper.install_tasks

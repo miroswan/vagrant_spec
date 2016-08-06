@@ -31,7 +31,6 @@ describe VagrantSpec::Command::Test do
       allow(VagrantSpec::TestPlan).to receive(:new) { mock_test }
       allow(mock_test).to             receive(:new)
       allow(mock_test).to             receive(:run)
-      
 
       expect(mock_test).to receive(:run)
       subject.execute
