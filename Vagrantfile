@@ -10,7 +10,7 @@ Vagrant.configure(2) do |config|
 
   # key: Ansible Group Name
   # value: Regexp matching your node names or an array of nodes
-  config.spec.ansible_inventory = { 'all' => /test/ }
+  config.spec.ansible_inventory = { 'ansi' => /_ansi/, 'pansi' => /_pansi/ }
 
   # nodes: Regexp matching the desired nodes or array of nodes
   # flags: Command line flags you would pass to rspec
