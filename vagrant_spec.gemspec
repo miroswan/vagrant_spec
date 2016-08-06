@@ -25,6 +25,6 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'coveralls'
 
   s.files        = `git ls-files`.split("\n")
-  s.test_files   = s.files.grep(/^(test|spec|features)/)
+  s.test_files   = s.files.grep(/^(spec)/)
   s.require_path = 'lib'
 end
