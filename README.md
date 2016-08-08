@@ -144,6 +144,12 @@ rspec ./serverspec/fail_spec.rb:4 # Thing that fails dumb_service totally fails
 1
 ```
 
+## Testing Resources
+
+* [ServerSpec](http://serverspec.org/)
+* [RSpec](http://rspec.info/)
+* [RSpec Best Practices](http://betterspecs.org/)
+
 ## Development
 
 * Fork the development branch
