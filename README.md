@@ -5,14 +5,18 @@
 
 Vagrant Spec is a Vagrant plugin that makes integration testing for deployments
 to clustered systems a breeze. It also separates the build and deployment steps
-to clearly delineate pipeline tasks. 
+to clearly separate pipeline tasks. 
+
+## Installation
+
+```vagrant plugin install vagrant_spec```
 
 ## Why not use TestKitchen or vagrant-serverspec?
 
 * Test Kitchen is an excellent integration testing system developed by Chef.
 However, it is designed to provision, test, and destroy each system one at a
 time. The directory structure it expects makes sharing tests across nodes 
-difficult to manager. This is undesireable for testing clustered or 
+difficult to manage. This is undesireable for testing clustered or 
 distributed systems. vagrant-serverspec has similar pitfalls. 
 
 * vagrant_spec allows you to leverage your deployment tools just like you would
@@ -143,4 +147,6 @@ rspec ./serverspec/fail_spec.rb:4 # Thing that fails dumb_service totally fails
 ## Development
 
 * Fork the development branch
+* ```pip install ansible```
+* ```bundle install```
 * ```bundle exec rake test```
