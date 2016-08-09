@@ -13,6 +13,7 @@ bundle exec vagrant spec init -h
 bundle exec vagrant spec test -h
 bundle exec vagrant spec no_command -h
 rm -f serverspec/spec_helper.rb
+rm -f .vagrantspec_machine_data
 bundle exec vagrant up
 bundle exec vagrant spec init
 ansible-playbook site.yml -i vagrantspec_inventory
