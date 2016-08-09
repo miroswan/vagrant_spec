@@ -42,10 +42,11 @@ module VagrantSpec
 
       def parse_opts
         opts = OptionParser.new do |o|
-          o.banner = "\nCreates the serverspec/spec_helper.rb file for testing"
+          o.banner = "\nInit: Initializes state configuration"
           o.separator ''
           o.separator 'Usage: vagrant spec init'
           o.separator ''
+          o.separator IO.read(File.join(template_dir, 'init_help'))
         end
         parse_options(opts)
       end

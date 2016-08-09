@@ -1,0 +1,21 @@
+The test subcommand will execute the serverspec tests configured in the 
+Vagrantfile under the config.spec.test_plan directive. This directive accepts
+an array of hashes. For example:
+
+config.spec.test_plan = [
+  {
+    'nodes' => /nginx/,
+    'flags' => '--format documentation --pattern serverspec/nginx*'
+  },
+  {
+    'nodes' => %w(app1 app2),
+    'flags' => '--format documentation --pattern serverspec/app*'
+  }
+]
+
+Each hash have two required keys: nodes and flags. The nodes key accepts a 
+regular expression object matching the names of the vagrant machines defined in 
+the Vagrantfile. Alternatively, you can explicility pass an array of node names. 
+The flags key accepts a string of command line arguments to pass to rspec. Any
+of the acceptable rspec options and parameters are leagle.  
+
