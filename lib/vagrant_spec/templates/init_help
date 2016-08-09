@@ -1,0 +1,16 @@
+The init subcommand initializes state-based configuration for vagrant_spec. 
+
+It creates a spec_helper.rb file under the configured serverspec directory. This 
+file is used to setup serverspec backend configuration and ease serverspec 
+testing. 
+
+If config.spec.ansible_inventory configuration directive is used within the 
+Vagrantfile, then init will generate a test inventory file 
+vagrantspec_inventory. This file can be used for ansible orchestration against 
+the vagrant instances. 
+
+By default, init will generate a json file containing machine data for each 
+vagrant instance at .vagrantspec_machine_data. This file can be used by
+orchestration tooling outside of ansible to map events to vagrant nodes. The
+config.spec.generate_machine_data configuration parameter controls the 
+generation of this file. 
