@@ -1,8 +1,9 @@
 # vagrant_spec
 
+[![Gem Version](https://badge.fury.io/rb/vagrant_spec.svg)](https://badge.fury.io/rb/vagrant_spec)
 [![Build Status](https://travis-ci.org/miroswan/vagrant_spec.svg?branch=master)](https://travis-ci.org/miroswan/vagrant_spec) 
 [![Coverage Status](https://coveralls.io/repos/github/miroswan/vagrant_spec/badge.svg?branch=master)](https://coveralls.io/github/miroswan/vagrant_spec?branch=master)
-[![Gem Version](https://badge.fury.io/rb/vagrant_spec.svg)](https://badge.fury.io/rb/vagrant_spec)
+
 
 Vagrant Spec is a Vagrant plugin that makes integration testing for deployments
 to clustered systems a breeze. It also separates the build and deployment steps
@@ -71,7 +72,14 @@ defaults to serverspec.
 You can specify as many groups as you need. You can match nodes by regular 
 expression or explicitly provide an array of node names. This will generate 
 an vagrantspec_inventory based on your active nodes. You use this file for 
-running ansible playbooks against your Vagrant instances. 
+running ansible playbooks against your Vagrant instances. Use this configuration
+directive if you use ansible for orchestration. 
+
+* config.spec.generate_machine_data: a boolean. If true, the init sub-command
+will generate a json file at .vagrantspec_machine_data containing relevant
+ssh information for each of your nodes. This can be helpful when leveraging
+orchestration tooling aside from ansible. You can use this data to direct your
+orchestration to your local instances. The default is set to true. 
 
 * config.spec.test_plan: an array of hashes. nodes can either be a regular 
 expression object that matches your desired nodes or an explicit array of 

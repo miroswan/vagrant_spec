@@ -2,6 +2,7 @@
 
 require 'vagrant_spec/ansible_inventory'
 require 'vagrant_spec/spec_helper'
+require 'vagrant_spec/machine_data'
 require 'vagrant_spec/config'
 
 module VagrantSpec
@@ -15,12 +16,17 @@ module VagrantSpec
 
       DEFAULTS = VagrantSpec::Config::DEFAULTS
 
-      attr_accessor :config, :directory, :ansible_inventory
+      attr_accessor :config
+      attr_accessor :directory
+      attr_accessor :ansible_inventory
+      attr_accessor :generate_machine_data
+
       def initialize(argv, env)
         super
-        @config            = VagrantSpec::Config.load env
-        @directory         = @config.spec.directory
-        @ansible_inventory = @config.spec.ansible_inventory
+        @config                = VagrantSpec::Config.load env
+        @directory             = @config.spec.directory
+        @ansible_inventory     = @config.spec.ansible_inventory
+        @generate_machine_data = @config.spec.generate_machine_data
       end
 
       def execute
@@ -28,6 +34,9 @@ module VagrantSpec
         VagrantSpec::SpecHelper.new(@env).generate
         unless @ansible_inventory == DEFAULTS['ansible_inventory']
           VagrantSpec::AnsibleInventory.new(@env).generate
+        end
+        if @generate_machine_data == DEFAULTS['generate_machine_data']
+          VagrantSpec::MachineData.new(@env).generate
         end
       end
 

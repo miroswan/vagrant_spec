@@ -11,11 +11,13 @@ module VagrantSpec
       attr_accessor :directory
       attr_accessor :ansible_inventory
       attr_accessor :test_plan
+      attr_accessor :generate_machine_data
 
       def initialize
-        @directory         = UNSET_VALUE
-        @ansible_inventory = UNSET_VALUE
-        @test_plan         = UNSET_VALUE
+        @directory             = UNSET_VALUE
+        @ansible_inventory     = UNSET_VALUE
+        @test_plan             = UNSET_VALUE
+        @generate_machine_data = UNSET_VALUE
       end
 
       def final_directory
@@ -32,10 +34,17 @@ module VagrantSpec
         @test_plan = DEFAULTS['test_plan'] if @test_plan == UNSET_VALUE
       end
 
+      def final_generate_machine_data
+        if @generate_machine_data == UNSET_VALUE
+          @generate_machine_data = DEFAULTS['generate_machine_data']
+        end
+      end
+
       def finalize!
         final_directory
         final_ansible_inventory
         final_test_plan
+        final_generate_machine_data
       end
     end
   end

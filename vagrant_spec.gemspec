@@ -6,6 +6,7 @@ Gem::Specification.new do |s|
   s.name        = 'vagrant_spec'
   s.version     = VagrantSpec::VERSION
   s.platform    = Gem::Platform::RUBY
+  s.licenses    = %w(Apache2)
   s.authors     = %w(Demitri Swan)
   s.email       = %w(demitriswan@gmail.com)
   s.homepage    = 'http://github.com/miroswan/vagrant_spec'

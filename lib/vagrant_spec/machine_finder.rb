@@ -20,6 +20,13 @@ module VagrantSpec
       nil
     end
 
+    # Yield active machines
+    #
+    # yield [Vagrant::Machine]
+    def machines
+      @env.active_machines.each { |m| yield @env.machine(*m) }
+    end
+
     # reg [Regexp]
     #
     # return [Array<Vagrant::Machine>]
