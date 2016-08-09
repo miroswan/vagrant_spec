@@ -1,7 +1,15 @@
 # Change Log
 
-## [0.0.2](https://github.com/miroswan/vagrant_spec/tree/0.0.2) (2016-08-06)
-[Full Changelog](https://github.com/miroswan/vagrant_spec/compare/v0.0.1...0.0.2)
+## [v0.0.3](https://github.com/miroswan/vagrant_spec/tree/v0.0.3) (2016-08-09)
+[Full Changelog](https://github.com/miroswan/vagrant_spec/compare/v0.0.2...v0.0.3)
+
+**Merged pull requests:**
+
+- Prepping for a v0.0.3 release [\#6](https://github.com/miroswan/vagrant_spec/pull/6) ([miroswan](https://github.com/miroswan))
+- Feature/machine data [\#5](https://github.com/miroswan/vagrant_spec/pull/5) ([miroswan](https://github.com/miroswan))
+
+## [v0.0.2](https://github.com/miroswan/vagrant_spec/tree/v0.0.2) (2016-08-06)
+[Full Changelog](https://github.com/miroswan/vagrant_spec/compare/v0.0.1...v0.0.2)
 
 **Closed issues:**
 
