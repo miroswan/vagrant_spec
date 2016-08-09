@@ -15,8 +15,13 @@ describe VagrantSpec::Command::Init do
     double(VagrantSpec::AnsibleInventory)
   end
 
+  let(:mock_machine_data) do
+    double(VagrantSpec::MachineData)
+  end
+
   before do
     allow(mock_spec).to receive(:ansible_inventory) { { 'all' => /node/ } }
+    allow(mock_spec).to receive(:generate_machine_data)
   end
 
   subject { VagrantSpec::Command::Init.new([], iso_env) }
@@ -29,8 +34,10 @@ describe VagrantSpec::Command::Init do
     proc do
       allow_any_instance_of(VagrantSpec::SpecHelper).to       receive(:generate)
       allow_any_instance_of(VagrantSpec::AnsibleInventory).to receive(:generate)
-      allow(mock_spec_helper).to receive(:generate)
+      allow_any_instance_of(VagrantSpec::MachineData).to      receive(:generate)
+      allow(mock_spec_helper).to       receive(:generate)
       allow(mock_ansible_inventory).to receive(:generate)
+      allow(mock_machine_data).to      receive(:generate)
     end
   end
 
@@ -46,12 +53,11 @@ describe VagrantSpec::Command::Init do
     def execute_protection_proc
       proc do
         allow(subject).to receive(:parse_opts) { 'not_nil' }
-        allow(VagrantSpec::SpecHelper).to receive(:new) do
-          mock_spec_helper
-        end
+        allow(VagrantSpec::SpecHelper).to receive(:new) { mock_spec_helper }
         allow(VagrantSpec::AnsibleInventory).to receive(:new) do
           mock_ansible_inventory
         end
+        allow(VagrantSpec::MachineData).to receive(:new) { mock_machine_data }
         execute_proc.call
       end
     end
@@ -74,6 +80,24 @@ describe VagrantSpec::Command::Init do
 
         expect(mock_spec_helper).to       receive(:generate)
         expect(mock_ansible_inventory).to receive(:generate)
+        subject.execute
+      end
+    end
+
+    context 'and when @generate_machine_data is true' do
+      it '#execute generates a .vagrantspec_machine_data file' do
+        execute_protection_proc.call
+        subject.generate_machine_data = true
+        expect(mock_machine_data).to receive(:generate)
+        subject.execute
+      end
+    end
+
+    context 'and when @generate_machine_data is false' do
+      it '#execute does not generate a .vagrantspec_machine_data file' do
+        execute_protection_proc.call
+        subject.generate_machine_data = false
+        expect(mock_machine_data).not_to receive(:generate)
         subject.execute
       end
     end

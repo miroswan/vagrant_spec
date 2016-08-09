@@ -1,6 +1,7 @@
 .vagrant
 Gemfile.lock
 vagrantspec_inventory
+.vagrantspec_machine_data
 serverspec/spec_helper.rb
 coverage
 pkg

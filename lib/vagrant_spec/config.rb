@@ -6,9 +6,10 @@ module VagrantSpec
     autoload :Base, 'vagrant_spec/config/base'
 
     DEFAULTS = {
-      'directory'         => 'serverspec',
-      'ansible_inventory' => {},
-      'test_plan'         => []
+      'directory'             => 'serverspec',
+      'ansible_inventory'     => {},
+      'test_plan'             => [],
+      'generate_machine_data' => true
     }.freeze
 
     class << self
