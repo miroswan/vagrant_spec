@@ -122,4 +122,11 @@ describe VagrantSpec::TestPlan do
       expect(subject.test_plan[0]['flags']).to match(/-I serverspec/)
     end
   end
+
+  it '#execute calls close_ssh and configure_serverspec' do
+    in_sub_process do
+      expect(subject).to receive(:close_ssh)
+      expect(subject).to receive(:configure_serverspec)
+    end
+  end
 end
