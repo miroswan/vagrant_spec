@@ -21,6 +21,8 @@ require 'vagrant_spec'
 require 'unit/support/shared/base_context'
 require 'unit/support/shared/virtualbox_context'
 
+require 'serverspec'
+
 # Build methods to retrieve plugins against VagrantSpec::Plugin.
 #
 # Example: get_commands(VagrantSpec::Plugin)
@@ -53,6 +55,9 @@ RSpec.shared_examples 'shared_mocks' do
     end
     EOF
   end
+
+  # Silence ServerSpec
+  set :backend, :ssh
 
   let(:mock_vf_obj) { double(Vagrant::Vagrantfile)      }
   let(:mock_ui)     { double(Vagrant::UI)               }

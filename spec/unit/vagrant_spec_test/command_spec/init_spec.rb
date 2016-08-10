@@ -7,10 +7,6 @@ describe VagrantSpec::Command::Init do
   include_context  'unit'
   include_examples 'shared_mocks'
 
-  let(:mock_spec_helper) do
-    double(VagrantSpec::SpecHelper)
-  end
-
   let(:mock_ansible_inventory) do
     double(VagrantSpec::AnsibleInventory)
   end
@@ -32,10 +28,8 @@ describe VagrantSpec::Command::Init do
 
   def execute_proc
     proc do
-      allow_any_instance_of(VagrantSpec::SpecHelper).to       receive(:generate)
       allow_any_instance_of(VagrantSpec::AnsibleInventory).to receive(:generate)
       allow_any_instance_of(VagrantSpec::MachineData).to      receive(:generate)
-      allow(mock_spec_helper).to       receive(:generate)
       allow(mock_ansible_inventory).to receive(:generate)
       allow(mock_machine_data).to      receive(:generate)
     end
@@ -53,7 +47,6 @@ describe VagrantSpec::Command::Init do
     def execute_protection_proc
       proc do
         allow(subject).to receive(:parse_opts) { 'not_nil' }
-        allow(VagrantSpec::SpecHelper).to receive(:new) { mock_spec_helper }
         allow(VagrantSpec::AnsibleInventory).to receive(:new) do
           mock_ansible_inventory
         end
@@ -66,8 +59,6 @@ describe VagrantSpec::Command::Init do
       it '#execute creates an instance of VagrantSpec::SpecHelper' do
         execute_protection_proc.call
         subject.ansible_inventory = {}
-
-        expect(mock_spec_helper).to           receive(:generate)
         expect(mock_ansible_inventory).to_not receive(:generate)
         subject.execute
       end
@@ -78,7 +69,6 @@ describe VagrantSpec::Command::Init do
         execute_protection_proc.call
         subject.ansible_inventory = { 'all' => /node/ }
 
-        expect(mock_spec_helper).to       receive(:generate)
         expect(mock_ansible_inventory).to receive(:generate)
         subject.execute
       end

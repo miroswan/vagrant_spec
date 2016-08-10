@@ -1,9 +1,5 @@
 The init subcommand initializes state-based configuration for vagrant_spec. 
 
-It creates a spec_helper.rb file under the configured ServerSpec directory. This 
-file is used to setup ServerSpec backend configuration and ease ServerSpec 
-testing. 
-
 If the config.spec.ansible_inventory configuration directive is used within the 
 Vagrantfile, then init will generate a test inventory file 
 vagrantspec_inventory. This file can be used for ansible orchestration against 

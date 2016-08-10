@@ -1,6 +1,9 @@
 # encoding: UTF-8
 
 require 'rspec'
+require 'serverspec'
+require 'specinfra'
+require 'specinfra/backend'
 
 require 'vagrant_spec/config'
 require 'vagrant_spec/machine_finder'
@@ -47,18 +50,37 @@ module VagrantSpec
       end
     end
 
+    # Close existing SSH
+    def close_ssh
+      if ::Specinfra::Backend::Ssh.instance.get_config(:ssh)
+        ::Specinfra::Backend::Ssh.instance.get_config(:ssh).close
+        ::Specinfra::Backend::Ssh.instance.set_config(:ssh, nil)
+      end
+    end
+
+    # Configures ServerSpec
+    #
+    # node [Vagrant::Machine]
+    def configure_serverspec(node)
+      set :backend, :ssh
+      host           = node.ssh_info[:host].to_s
+      options        = Net::SSH::Config.for(host)
+      options[:user] = node.ssh_info[:username].to_s
+      options[:keys] = node.ssh_info[:private_key_path][0].to_s
+      options[:port] = node.ssh_info[:port].to_s
+
+      set :host,        host
+      set :ssh_options, options
+    end
+
     # Execute a test_suite and return the code
     #
     # node [Vagrant::Machine]
     # plan [Hash] item in the @config.spec.test_plan
-    #
-    # return [@ret_code]
     def execute_plan_tests(node, plan)
       @env.ui.info("[#{node.name}]")
-      ENV['VAGRANT_HOST'] = node.ssh_info[:host].to_s
-      ENV['VAGRANT_PORT'] = node.ssh_info[:port].to_s
-      ENV['VAGRANT_KEY']  = node.ssh_info[:private_key_path][0].to_s
-      ENV['VAGRANT_USER'] = node.ssh_info[:username].to_s
+      close_ssh
+      configure_serverspec(node)
       plan['flags'].prepend "-I #{@config.spec.directory} "
       ret_code = RSpec::Core::Runner.run(plan['flags'].split, $stderr, $stdout)
       RSpec.clear_examples

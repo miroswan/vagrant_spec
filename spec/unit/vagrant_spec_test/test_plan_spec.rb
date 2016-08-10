@@ -38,6 +38,8 @@ describe VagrantSpec::TestPlan do
     }
   end
 
+  let(:mock_ssh_backend) { double(Specinfra::Backend::Ssh) }
+
   ##############################################################################
   # Stubs
 
@@ -46,6 +48,8 @@ describe VagrantSpec::TestPlan do
       .to receive(:match_nodes) { [double(Vagrant::Machine)] }
     allow_any_instance_of(VagrantSpec::MachineFinder)
       .to receive(:machine)     { double(Vagrant::Machine)   }
+
+    allow(::Specinfra::Backend::Ssh).to receive(:instance) { mock_ssh_backend }
 
     allow(RSpec::Core::Runner).to receive(:run) { 0 }
     allow(iso_env).to             receive(:ui)
@@ -58,9 +62,6 @@ describe VagrantSpec::TestPlan do
   end
 
   subject { VagrantSpec::TestPlan.new(iso_env) }
-
-  ##############################################################################
-  # Testing #nodes
 
   context 'when passing a Regexp object' do
     it '#nodes calls match_nodes on a machine_finder instance' do
@@ -81,6 +82,17 @@ describe VagrantSpec::TestPlan do
     end
   end
 
+  context 'when ssh config is truthy' do
+    it '#close_ssh closes the pre-existing SSH connection' do
+      ssh_obj = double(Object.new)
+      allow(mock_ssh_backend).to receive(:get_config).with(:ssh) { ssh_obj }
+      allow(mock_ssh_backend).to receive(:set_config)
+      expect(ssh_obj).to receive(:close)
+      expect(mock_ssh_backend).to receive(:set_config)
+      subject.close_ssh
+    end
+  end
+
   ##############################################################################
   # Testing #execute_plan_tests
   #
@@ -88,8 +100,16 @@ describe VagrantSpec::TestPlan do
   # executes clear_examples. clear_examples modifies global state, so we must
   # contain it.
 
+  def execute_plan_tests_proc
+    proc do
+      allow(subject).to receive(:close_ssh)
+      allow(subject).to receive(:configure_serverspec)
+    end
+  end
+
   it '#execute_plan_tests runs the RSPec tests' do
     in_sub_process do
+      execute_plan_tests_proc.call
       expect(RSpec::Core::Runner).to receive(:run)
       subject.execute_plan_tests(mock_node, mock_plan[0])
     end
@@ -97,8 +117,9 @@ describe VagrantSpec::TestPlan do
 
   it '#execute adds the spec.directory to the load path' do
     in_sub_process do
+      execute_plan_tests_proc.call
       subject.execute_plan_tests(mock_node, mock_plan[0])
-      expect(subject.test_plan[0]['flags']).to include('-I serverspec')
+      expect(subject.test_plan[0]['flags']).to match(/-I serverspec/)
     end
   end
 end

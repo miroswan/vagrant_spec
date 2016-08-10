@@ -92,9 +92,11 @@ your cluster of nodes.
 
 * version: Print the current version of vagrant_spec
 
-* init: This will generate your spec_helper.rb for serverspec testing and your
-ansible inventory file. You'll typically want to run this after a vagrant up,
-and before your deployment and testing tasks. 
+* init: This will generate your ansible inventory file if you've configured your
+config.spec.ansible_inventory directive. Additionally, it'll generate your
+.vagrantspec_machine_data file if set to enabled via 
+config.spec.generate_machine_data. You'll typically want to run this after a 
+vagrant up and before your deployment and testing tasks. 
 
 * test: This will run the tests specified in your Vagrantfile. Tests are
 executed against each node in your fleet and the exit code is stored if an error
@@ -104,9 +106,9 @@ to the shell. Otherwise, it will return zero.
 ## Sample Output
 
 ```
-> bundle exec vagrant spec init
+> vagrant spec init
 
-> bundle exec vagrant spec test
+> vagrant spec test
 
 *******************************************************
 ***************** ServerSpec Test Run *****************
@@ -114,45 +116,22 @@ to the shell. Otherwise, it will return zero.
 
 [test_ansible]
 
-ssh
-  ssh should be running
+Test Hostname
+  hostname is test_ansible
 
-Finished in 0.46065 seconds (files took 1.68 seconds to load)
+Finished in 0.43356 seconds (files took 1.61 seconds to load)
 1 example, 0 failures
 
 [test_pansible]
 
-Thing that fails
-  dumb_service totally fails (FAILED - 1)
+Test Hostname
+  hostname is test_pansible
 
-Failures:
-
-  1) Thing that fails dumb_service totally fails
-     On host `127.0.0.1'
-     Failure/Error: expect(service('dumb_service')).to be_running
-       expected Service "dumb_service" to be running
-       sudo -p 'Password: ' /bin/sh -c ps\ aux\ \|\ grep\ -w\ --\ dumb_service\ \|\ grep\ -qv\ grep
-
-     # ./serverspec/fail_spec.rb:5:in `block (2 levels) in <top (required)>'
-     # ./lib/vagrant_spec/test_plan.rb:62:in `execute_plan_tests'
-     # ./lib/vagrant_spec/test_plan.rb:31:in `block (2 levels) in run'
-     # ./lib/vagrant_spec/test_plan.rb:31:in `each'
-     # ./lib/vagrant_spec/test_plan.rb:31:in `block in run'
-     # ./lib/vagrant_spec/test_plan.rb:30:in `each'
-     # ./lib/vagrant_spec/test_plan.rb:30:in `run'
-     # ./lib/vagrant_spec/command/test.rb:18:in `execute'
-     # ./lib/vagrant_spec/command/base.rb:61:in `parse_subcommand'
-     # ./lib/vagrant_spec/command/base.rb:25:in `execute'
-
-Finished in 0.05726 seconds (files took 0.58135 seconds to load)
-1 example, 1 failure
-
-Failed examples:
-
-rspec ./serverspec/fail_spec.rb:4 # Thing that fails dumb_service totally fails
+Finished in 0.22762 seconds (files took 0.59837 seconds to load)
+1 example, 0 failures
 
 > echo $?
-1
+0
 ```
 
 ## Testing Resources
