@@ -90,6 +90,8 @@ your cluster of nodes.
 
 ## Sub Commands
 
+* version: Print the current version of vagrant_spec
+
 * init: This will generate your spec_helper.rb for serverspec testing and your
 ansible inventory file. You'll typically want to run this after a vagrant up,
 and before your deployment and testing tasks. 
