@@ -1,8 +1,14 @@
 # Change Log
 
-## [Unreleased](https://github.com/miroswan/vagrant_spec/tree/HEAD)
+## [v0.0.4](https://github.com/miroswan/vagrant_spec/tree/v0.0.4) (2016-08-09)
+[Full Changelog](https://github.com/miroswan/vagrant_spec/compare/v0.0.4...v0.0.4)
 
-[Full Changelog](https://github.com/miroswan/vagrant_spec/compare/v0.0.3...HEAD)
+**Closed issues:**
+
+- Fix spelling and grammatical issues in the documentation [\#7](https://github.com/miroswan/vagrant_spec/issues/7)
+
+## [v0.0.4](https://github.com/miroswan/vagrant_spec/tree/v0.0.4) (2016-08-10)
+[Full Changelog](https://github.com/miroswan/vagrant_spec/compare/v0.0.3...v0.0.4)
 
 **Implemented enhancements:**
 
@@ -12,8 +18,19 @@
 
 - License info needs to be added to the gemspec [\#4](https://github.com/miroswan/vagrant_spec/issues/4)
 
+**Merged pull requests:**
+
+- Preparation for v0.0.4  [\#12](https://github.com/miroswan/vagrant_spec/pull/12) ([miroswan](https://github.com/miroswan))
+- Updating the documentation [\#11](https://github.com/miroswan/vagrant_spec/pull/11) ([miroswan](https://github.com/miroswan))
+- Adding version sub-command [\#10](https://github.com/miroswan/vagrant_spec/pull/10) ([miroswan](https://github.com/miroswan))
+
 ## [v0.0.3](https://github.com/miroswan/vagrant_spec/tree/v0.0.3) (2016-08-09)
 [Full Changelog](https://github.com/miroswan/vagrant_spec/compare/v0.0.2...v0.0.3)
+
+**Merged pull requests:**
+
+- Prepping for a v0.0.3 release [\#6](https://github.com/miroswan/vagrant_spec/pull/6) ([miroswan](https://github.com/miroswan))
+- Feature/machine data [\#5](https://github.com/miroswan/vagrant_spec/pull/5) ([miroswan](https://github.com/miroswan))
 
 ## [v0.0.2](https://github.com/miroswan/vagrant_spec/tree/v0.0.2) (2016-08-06)
 [Full Changelog](https://github.com/miroswan/vagrant_spec/compare/v0.0.1...v0.0.2)
@@ -22,6 +39,10 @@
 
 - Help output for init needs to be updated [\#2](https://github.com/miroswan/vagrant_spec/issues/2)
 - Needs tests [\#1](https://github.com/miroswan/vagrant_spec/issues/1)
+
+**Merged pull requests:**
+
+- Updates [\#3](https://github.com/miroswan/vagrant_spec/pull/3) ([miroswan](https://github.com/miroswan))
 
 ## [v0.0.1](https://github.com/miroswan/vagrant_spec/tree/v0.0.1) (2016-08-06)
 
