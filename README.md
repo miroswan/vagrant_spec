@@ -24,7 +24,7 @@ distributed systems. vagrant-serverspec has similar pitfalls.
 * vagrant_spec allows you to leverage your deployment tools just like you would
 in staging and production. It generates an ansible inventory file after all
 nodes are brought up. This allows you to run the same ansible_playbook commands
-against the local node set as you would elsewhere. 
+against the Vagrant node set as you would elsewhere. 
 
 * routing tests to nodes is flexible and simple. 
 
