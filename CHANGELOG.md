@@ -1,11 +1,16 @@
 # Change Log
 
-## [v0.0.4](https://github.com/miroswan/vagrant_spec/tree/v0.0.4) (2016-08-09)
-[Full Changelog](https://github.com/miroswan/vagrant_spec/compare/v0.0.4...v0.0.4)
+## [v0.0.5](https://github.com/miroswan/vagrant_spec/tree/v0.0.5) (2016-08-10)
+[Full Changelog](https://github.com/miroswan/vagrant_spec/compare/v0.0.4...v0.0.5)
 
 **Closed issues:**
 
+- SSH Issue [\#14](https://github.com/miroswan/vagrant_spec/issues/14)
 - Fix spelling and grammatical issues in the documentation [\#7](https://github.com/miroswan/vagrant_spec/issues/7)
+
+**Merged pull requests:**
+
+- Fixing SSH [\#13](https://github.com/miroswan/vagrant_spec/pull/13) ([miroswan](https://github.com/miroswan))
 
 ## [v0.0.4](https://github.com/miroswan/vagrant_spec/tree/v0.0.4) (2016-08-10)
 [Full Changelog](https://github.com/miroswan/vagrant_spec/compare/v0.0.3...v0.0.4)
