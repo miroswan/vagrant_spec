@@ -1,7 +1,6 @@
 # encoding: UTF-8
 
 require 'vagrant_spec/ansible_inventory'
-require 'vagrant_spec/spec_helper'
 require 'vagrant_spec/machine_data'
 require 'vagrant_spec/config'
 
@@ -31,7 +30,6 @@ module VagrantSpec
 
       def execute
         return unless parse_opts
-        VagrantSpec::SpecHelper.new(@env).generate
         unless @ansible_inventory == DEFAULTS['ansible_inventory']
           VagrantSpec::AnsibleInventory.new(@env).generate
         end

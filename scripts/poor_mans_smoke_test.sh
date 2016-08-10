@@ -19,5 +19,5 @@ rm -f ".vagrantspec_machine_data"
 bundle exec vagrant up
 bundle exec vagrant spec init
 ansible-playbook site.yml -i vagrantspec_inventory
-bundle exec vagrant spec test || true
+bundle exec vagrant spec test
 bundle exec vagrant destroy -f 
