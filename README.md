@@ -9,6 +9,8 @@ Vagrant Spec is a Vagrant plugin that makes integration testing for deployments
 to clustered systems a breeze. It also separates the build and deployment steps
 to clearly separate pipeline tasks. 
 
+For a complete tutorial, reference the [Welcome to VagrantSpec](https://github.com/miroswan/vagrant_spec/wiki/Welcome-to-VagrantSpec)
+
 ## Installation
 
 ```vagrant plugin install vagrant_spec```
