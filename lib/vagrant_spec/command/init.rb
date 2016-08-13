@@ -1,5 +1,7 @@
 # encoding: UTF-8
 
+require 'fileutils'
+
 require 'vagrant_spec/ansible_inventory'
 require 'vagrant_spec/machine_data'
 require 'vagrant_spec/config'
@@ -30,6 +32,7 @@ module VagrantSpec
 
       def execute
         return unless parse_opts
+        FileUtils.mkdir @directory unless Dir.exist? @directory
         unless @ansible_inventory == DEFAULTS['ansible_inventory']
           VagrantSpec::AnsibleInventory.new(@env).generate
         end
