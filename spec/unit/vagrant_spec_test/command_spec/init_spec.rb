@@ -60,7 +60,7 @@ describe VagrantSpec::Command::Init do
     context 'when the @directory does not exist' do
       it '#execute creates the @directory' do
         execute_protection_proc.call
-        expect(FileUtils).to receive(:mkdir)
+        expect(FileUtils).to receive(:mkdir).with(subject.directory)
         subject.execute
       end
     end
