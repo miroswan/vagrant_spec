@@ -124,12 +124,10 @@ describe VagrantSpec::TestPlan do
   context 'when nodes returns nil' do
     it '#run does not fail with NoMethodError' do
       allow(subject).to receive(:execute_plan_tests)
-      allow(Kernel).to  receive(:exit)
+      allow(subject).to receive(:exit)
       allow(subject).to receive(:nodes) { nil }
 
-      # This will warn about potential false positives, but we truly only want
-      # to test for a NoMethodError as a regression test.
-      expect { subject.run }.not_to raise_error(NoMethodError)
+      expect { subject.run }.not_to raise_error
     end
   end
 end
