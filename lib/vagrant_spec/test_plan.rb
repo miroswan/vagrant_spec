@@ -27,14 +27,21 @@ module VagrantSpec
     # This will fail if any of the tests fail, but it will allow all tests to
     # run
     def run
+      print_banner
+      @test_plan.each do |plan|
+        found_nodes = nodes(plan)
+        if found_nodes
+          found_nodes.each { |node| execute_plan_tests(node, plan) }
+        end
+      end
+      exit @ret_code
+    end
+
+    def print_banner
       @env.ui.info('*******************************************************')
       @env.ui.info('***************** ServerSpec Test Run *****************')
       @env.ui.info('*******************************************************')
       @env.ui.info('')
-      @test_plan.each do |plan|
-        nodes(plan).each { |node| execute_plan_tests(node, plan) }
-      end
-      exit @ret_code
     end
 
     # Return array of active Vagrant machines

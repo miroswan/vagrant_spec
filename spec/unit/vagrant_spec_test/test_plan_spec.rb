@@ -10,10 +10,6 @@ require 'rspec/support/spec/stderr_splitter'
 describe VagrantSpec::TestPlan do
   include RSpec::Support::InSubProcess
   include_context 'unit'
-
-  ##############################################################################
-  # mocks
-
   include_examples 'shared_mocks'
 
   let(:mock_plan) do
@@ -40,9 +36,6 @@ describe VagrantSpec::TestPlan do
 
   let(:mock_ssh_backend) { double(Specinfra::Backend::Ssh) }
 
-  ##############################################################################
-  # Stubs
-
   before do
     allow_any_instance_of(VagrantSpec::MachineFinder)
       .to receive(:match_nodes) { [double(Vagrant::Machine)] }
@@ -62,6 +55,11 @@ describe VagrantSpec::TestPlan do
   end
 
   subject { VagrantSpec::TestPlan.new(iso_env) }
+
+  it '#print_banner prints the testing initialization banner' do
+    expect(mock_ui).to receive(:info)
+    subject.print_banner
+  end
 
   context 'when passing a Regexp object' do
     it '#nodes calls match_nodes on a machine_finder instance' do
@@ -93,13 +91,6 @@ describe VagrantSpec::TestPlan do
     end
   end
 
-  ##############################################################################
-  # Testing #execute_plan_tests
-  #
-  # These tests must be executed in a sub process because execute_plan_tests
-  # executes clear_examples. clear_examples modifies global state, so we must
-  # contain it.
-
   def execute_plan_tests_proc
     proc do
       allow(subject).to receive(:close_ssh)
@@ -127,6 +118,18 @@ describe VagrantSpec::TestPlan do
     in_sub_process do
       expect(subject).to receive(:close_ssh)
       expect(subject).to receive(:configure_serverspec)
+    end
+  end
+
+  context 'when nodes returns nil' do
+    it '#run does not fail with NoMethodError' do
+      allow(subject).to receive(:execute_plan_tests)
+      allow(Kernel).to  receive(:exit)
+      allow(subject).to receive(:nodes) { nil }
+
+      # This will warn about potential false positives, but we truly only want
+      # to test for a NoMethodError as a regression test.
+      expect { subject.run }.not_to raise_error(NoMethodError)
     end
   end
 end
