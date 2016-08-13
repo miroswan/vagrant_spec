@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="UTF-8">
+    <title>VagrantSpec by miroswan</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+  </head>
+  <body>
+    <section class="page-header">
+      <h1 class="project-name">VagrantSpec</h1>
+      <h2 class="project-tagline">ServerSpec Testing for Clustered / Distributed Systems in Vagrant</h2>
+      <a href="https://github.com/miroswan/vagrant_spec" class="btn">View on GitHub</a>
+      <a href="https://github.com/miroswan/vagrant_spec/zipball/master" class="btn">Download .zip</a>
+      <a href="https://github.com/miroswan/vagrant_spec/tarball/master" class="btn">Download .tar.gz</a>
+    </section>
+
+    <section class="main-content">
+      <p>VagrantSpec is a Vagrant plugin that makes integration testing for deployments
+to clustered systems a breeze. It also separates the build and deployment steps
+to clearly separate pipeline tasks. </p>
+
+<p>For a complete tutorial, reference <a href="https://github.com/miroswan/vagrant_spec/wiki/Welcome-to-VagrantSpec">Welcome to VagrantSpec</a></p>
+
+<h2>
+<a id="installation" class="anchor" href="#installation" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Installation</h2>
+
+<p><code>vagrant plugin install vagrant_spec</code></p>
+
+<h2>
+<a id="why-not-use-testkitchen-or-vagrant-serverspec" class="anchor" href="#why-not-use-testkitchen-or-vagrant-serverspec" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Why not use TestKitchen or vagrant-serverspec?</h2>
+
+<ul>
+<li><p>Test Kitchen is an excellent integration testing system developed by Chef.
+However, it is designed to provision, test, and destroy each system one at a
+time. The directory structure it expects makes sharing tests across nodes 
+difficult to manage. This is undesireable for testing clustered or 
+distributed systems. vagrant-serverspec has similar pitfalls. </p></li>
+<li><p>vagrant_spec allows you to leverage your deployment tools just like you would
+in staging and production. It generates an ansible inventory file after all
+nodes are brought up. This allows you to run the same ansible_playbook commands
+against the Vagrant node set as you would elsewhere. </p></li>
+<li><p>routing tests to nodes is flexible and simple. </p></li>
+<li><p>vagrant_spec allows you to provision your nodes with configuration management
+and leverage ansible for orchestration and deployment. TestKitchen currently
+does not support this scenario without much trouble. </p></li>
+</ul>
+
+<p>Here is a sample Vagrantfile:</p>
+
+<pre><code>Vagrant.configure(2) do |config|
+  config.vm.box = 'ubuntu/trusty64'
+
+  config.vm.define 'test_ansible' do |b|
+    b.vm.hostname = 'ansible'
+  end
+
+  config.vm.define 'test_pansible' do |b|
+    b.vm.hostname = 'pansible'
+  end
+
+  # key: Ansible Group Name
+  # value: Regexp matching your node names or an array of nodes
+  config.spec.ansible_inventory = { 'ansi' =&gt; /_ansi/, 'pansi' =&gt; /_pansi/ }
+
+  # nodes: Regexp matching the desired nodes or array of nodes
+  # flags: Command line flags you would pass to rspec
+  config.spec.test_plan = [
+    {
+      'nodes' =&gt; /test_ansi/,
+      'flags' =&gt; '--format documentation --color --pattern serverspec/ansi*'
+    },
+    {
+      'nodes' =&gt; /test_pansi/,
+      'flags' =&gt; '--format documentation --color --pattern serverspec/pansi*'
+    }
+  ]
+end
+</code></pre>
+
+<h2>
+<a id="configuration" class="anchor" href="#configuration" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Configuration</h2>
+
+<ul>
+<li><p>config.spec.directory: relative path to your serverspec test files. This 
+defaults to serverspec. </p></li>
+<li><p>config.spec.ansible_inventory: a hash that maps ansible groups to your nodes.
+You can specify as many groups as you need. You can match nodes by regular 
+expression or explicitly provide an array of node names. This will generate 
+an vagrantspec_inventory based on your active nodes. You use this file for 
+running ansible playbooks against your Vagrant instances. Use this configuration
+directive if you use ansible for orchestration. </p></li>
+<li><p>config.spec.generate_machine_data: a boolean. If true, the init sub-command
+will generate a json file at .vagrantspec_machine_data containing relevant
+ssh information for each of your nodes. This can be helpful when leveraging
+orchestration tooling aside from ansible. You can use this data to direct your
+orchestration to your local instances. The default is set to true. </p></li>
+<li><p>config.spec.test_plan: an array of hashes. nodes can either be a regular 
+expression object that matches your desired nodes or an explicit array of 
+nodes. flags is a string that matches the desired flags you would pass to
+rspec. The last argument is typically a pattern that maps to the tests you'd 
+like to run. This allows you to split out what tests you'd like to run across
+your cluster of nodes. </p></li>
+</ul>
+
+<h2>
+<a id="sub-commands" class="anchor" href="#sub-commands" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Sub Commands</h2>
+
+<ul>
+<li><p>version: Print the current version of vagrant_spec</p></li>
+<li><p>init: This will generate your ansible inventory file if you've configured your
+config.spec.ansible_inventory directive. Additionally, it'll generate your
+.vagrantspec_machine_data file if set to enabled via 
+config.spec.generate_machine_data. You'll typically want to run this after a 
+vagrant up and before your deployment and testing tasks. </p></li>
+<li><p>test: This will run the tests specified in your Vagrantfile. Tests are
+executed against each node in your fleet and the exit code is stored if an error
+occurs. All tests will run. The exit code of the last failed run will return
+to the shell. Otherwise, it will return zero. </p></li>
+</ul>
+
+<h2>
+<a id="sample-output" class="anchor" href="#sample-output" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Sample Output</h2>
+
+<pre><code>&gt; vagrant spec init
+
+&gt; vagrant spec test
+
+*******************************************************
+***************** ServerSpec Test Run *****************
+*******************************************************
+
+[test_ansible]
+
+Test Hostname
+  hostname is test_ansible
+
+Finished in 0.43356 seconds (files took 1.61 seconds to load)
+1 example, 0 failures
+
+[test_pansible]
+
+Test Hostname
+  hostname is test_pansible
+
+Finished in 0.22762 seconds (files took 0.59837 seconds to load)
+1 example, 0 failures
+
+&gt; echo $?
+0
+</code></pre>
+
+<h2>
+<a id="testing-resources" class="anchor" href="#testing-resources" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Testing Resources</h2>
+
+<ul>
+<li><a href="http://serverspec.org/">ServerSpec</a></li>
+<li><a href="http://rspec.info/">RSpec</a></li>
+<li><a href="http://betterspecs.org/">RSpec Best Practices</a></li>
+</ul>
+
+<h2>
+<a id="development" class="anchor" href="#development" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Development</h2>
+
+<ul>
+<li>Fork the development branch</li>
+<li><code>pip install ansible</code></li>
+<li><code>bundle install</code></li>
+<li><code>bundle exec rake test</code></li>
+</ul>
+
+      <footer class="site-footer">
+        <span class="site-footer-owner"><a href="https://github.com/miroswan/vagrant_spec">VagrantSpec</a> is maintained by <a href="https://github.com/miroswan">miroswan</a>.</span>
+
+        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
+      </footer>
+
+    </section>
+
+  
+  </body>
+</html>
