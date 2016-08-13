@@ -32,6 +32,8 @@ describe VagrantSpec::Command::Init do
       allow_any_instance_of(VagrantSpec::MachineData).to      receive(:generate)
       allow(mock_ansible_inventory).to receive(:generate)
       allow(mock_machine_data).to      receive(:generate)
+      allow(Dir).to                    receive(:exist?) { false }
+      allow(FileUtils).to              receive(:mkdir)
     end
   end
 
@@ -52,6 +54,14 @@ describe VagrantSpec::Command::Init do
         end
         allow(VagrantSpec::MachineData).to receive(:new) { mock_machine_data }
         execute_proc.call
+      end
+    end
+
+    context 'when the @directory does not exist' do
+      it '#execute creates the @directory' do
+        execute_protection_proc.call
+        expect(FileUtils).to receive(:mkdir).with(subject.directory)
+        subject.execute
       end
     end
 
