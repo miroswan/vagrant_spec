@@ -1,11 +1,29 @@
 # Change Log
 
-## [v0.0.5](https://github.com/miroswan/vagrant_spec/tree/v0.0.5) (2016-08-10)
-[Full Changelog](https://github.com/miroswan/vagrant_spec/compare/v0.0.4...v0.0.5)
+## [v0.0.6](https://github.com/miroswan/vagrant_spec/tree/v0.0.6) (2016-08-13)
+[Full Changelog](https://github.com/miroswan/vagrant_spec/compare/v0.0.5...v0.0.6)
 
 **Closed issues:**
 
+- Test command spews stacktrace when no nodes are found [\#17](https://github.com/miroswan/vagrant_spec/issues/17)
+- Wiki should contain a walkthrough of how to get started with system config testing [\#8](https://github.com/miroswan/vagrant_spec/issues/8)
+
+**Merged pull requests:**
+
+- Develop [\#19](https://github.com/miroswan/vagrant_spec/pull/19) ([miroswan](https://github.com/miroswan))
+- Fix/handle no machines [\#18](https://github.com/miroswan/vagrant_spec/pull/18) ([miroswan](https://github.com/miroswan))
+- Fix/directory [\#16](https://github.com/miroswan/vagrant_spec/pull/16) ([miroswan](https://github.com/miroswan))
+- Update README.md [\#15](https://github.com/miroswan/vagrant_spec/pull/15) ([miroswan](https://github.com/miroswan))
+
+## [v0.0.5](https://github.com/miroswan/vagrant_spec/tree/v0.0.5) (2016-08-10)
+[Full Changelog](https://github.com/miroswan/vagrant_spec/compare/v0.0.4...v0.0.5)
+
+**Fixed bugs:**
+
 - SSH Issue [\#14](https://github.com/miroswan/vagrant_spec/issues/14)
+
+**Closed issues:**
+
 - Fix spelling and grammatical issues in the documentation [\#7](https://github.com/miroswan/vagrant_spec/issues/7)
 
 **Merged pull requests:**
